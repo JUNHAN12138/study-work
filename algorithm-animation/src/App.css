@@ -1,0 +1,359 @@
+/* ========================================
+   算法动画可视化 —— 全局统一颜色语义
+   ======================================== */
+
+:root {
+  --color-default: #6b7b8d;
+  --color-compare: #f5a623;
+  --color-swap: #e74c3c;
+  --color-sorted: #27ae60;
+  --color-pivot: #9b59b6;
+  --color-min: #00bcd4;
+  --color-key: #00bcd4;
+  --color-active: #2196f3;
+  --color-path: #4caf50;
+  --color-bg: #1a1a2e;
+  --color-surface: #16213e;
+  --color-text: #eaeaea;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: #aaa;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+/* Tab Bar */
+.tab-bar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tab-bar button {
+  padding: 0.6rem 1.5rem;
+  border: 2px solid #444;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.tab-bar button.active {
+  border-color: var(--color-active);
+  background: rgba(33, 150, 243, 0.15);
+  color: var(--color-active);
+}
+
+/* ========= Sorting Animation ========= */
+.sorting-animation {
+  background: var(--color-surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.sorting-animation h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.algo-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.algo-selector button {
+  padding: 0.4rem 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.algo-selector button.active {
+  background: var(--color-active);
+  border-color: var(--color-active);
+  color: #fff;
+}
+
+.input-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.input-controls input {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #0f1629;
+  color: var(--color-text);
+  width: 200px;
+}
+
+.input-controls button,
+.bst-controls button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #2a3a5a;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.input-controls button:hover,
+.bst-controls button:hover {
+  background: #3a4a6a;
+}
+
+/* Bar Chart */
+.bar-chart {
+  margin-bottom: 1.5rem;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 250px;
+  gap: 4px;
+  padding: 1rem;
+  background: #0f1629;
+  border-radius: 8px;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 36px;
+  flex: 1;
+  max-width: 60px;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.3s ease, background-color 0.3s ease;
+  position: relative;
+}
+
+.bar-value {
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.bar-index {
+  position: absolute;
+  bottom: -20px;
+  font-size: 0.7rem;
+  color: #888;
+}
+
+/* 颜色语义 —— 全局统一 */
+.bar-default { background: var(--color-default); }
+.bar-compare { background: var(--color-compare); }
+.bar-swap { background: var(--color-swap); }
+.bar-sorted { background: var(--color-sorted); }
+.bar-pivot { background: var(--color-pivot); }
+.bar-min { background: var(--color-min); }
+.bar-key { background: var(--color-key); }
+.bar-active { background: var(--color-active); }
+.bar-path { background: var(--color-path); }
+
+/* Description Bar */
+.desc-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1rem;
+  background: #0f1629;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+.desc-text {
+  font-size: 0.95rem;
+  color: #fff;
+}
+
+.stats-text {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+/* Player Controls */
+.player-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control-buttons button {
+  padding: 0.5rem 1rem;
+  border: 1px solid #555;
+  border-radius: 8px;
+  background: #2a3a5a;
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+}
+
+.control-buttons button:hover {
+  background: #3a4a6a;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
+}
+
+.progress-bar input[type="range"] {
+  flex: 1;
+  cursor: pointer;
+}
+
+.progress-text {
+  font-size: 0.85rem;
+  color: #aaa;
+  white-space: nowrap;
+}
+
+.speed-control {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.speed-control span {
+  font-size: 0.85rem;
+  color: #aaa;
+}
+
+.speed-control button {
+  padding: 0.2rem 0.5rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.speed-control button.active {
+  background: var(--color-active);
+  border-color: var(--color-active);
+}
+
+/* ========= BST Animation ========= */
+.bst-animation {
+  background: var(--color-surface);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.bst-animation h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.bst-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.bst-controls input {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #0f1629;
+  color: var(--color-text);
+  width: 120px;
+}
+
+.bst-message {
+  text-align: center;
+  padding: 0.6rem;
+  background: #0f1629;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.tree-svg {
+  display: block;
+  margin: 0 auto;
+  background: #0f1629;
+  border-radius: 8px;
+}
+
+.tree-edge {
+  stroke: #555;
+  stroke-width: 2;
+}
+
+.tree-node {
+  fill: var(--color-default);
+  stroke: #888;
+  stroke-width: 2;
+  transition: fill 0.3s, stroke 0.3s;
+}
+
+.tree-node.active {
+  fill: var(--color-active);
+  stroke: #fff;
+  stroke-width: 3;
+}
+
+.tree-text {
+  fill: #fff;
+  font-size: 12px;
+  font-weight: bold;
+}
