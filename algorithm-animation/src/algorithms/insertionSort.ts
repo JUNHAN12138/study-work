@@ -1,14 +1,12 @@
-import { frame } from './frame'
+import { type Frame, frame } from './frame'
 
-/**
- * 插入排序 —— 边算边打帧
- */
-export function insertionSort(input) {
+/** 插入排序 —— 边算边打帧 */
+export function insertionSort(input: number[]): Frame[] {
   const arr = [...input]
   const n = arr.length
-  const steps = []
+  const steps: Frame[] = []
   const stats = { comparisons: 0, swaps: 0 }
-  const sorted = { 0: 'sorted' }
+  const sorted: Record<number, string> = { 0: 'sorted' }
 
   steps.push(frame(arr, { 0: 'sorted' }, '开始插入排序：将第一个元素视为已排序，逐个将后续元素插入正确位置。', stats))
 
@@ -27,7 +25,7 @@ export function insertionSort(input) {
         arr[j + 1] = arr[j]
         stats.swaps++
         steps.push(frame(arr, { ...sorted, [j + 1]: 'swap', [j]: 'swap' },
-          `${arr[j]} > ${key}，将 a[${j}] 后移到 a[${j + 1}]`, stats))
+          `${arr[j + 1]} > ${key}，将 a[${j}] 后移到 a[${j + 1}]`, stats))
         j--
       } else {
         break

@@ -1,11 +1,13 @@
 import React from 'react'
+import type { Frame } from '../algorithms'
+import './BarChart.css'
 
-/**
- * 柱状图可视化组件 —— 把帧画出来
- * 视图只读当前帧，无任何算法逻辑
- */
-export function BarChart({ frame }) {
-  if (!frame) return null
+interface BarChartProps {
+  frame: Frame
+}
+
+/** 柱状图可视化组件 —— 只读当前帧，无算法逻辑 */
+export const BarChart: React.FC<BarChartProps> = ({ frame }) => {
   const maxVal = Math.max(...frame.array)
 
   return (
@@ -24,12 +26,6 @@ export function BarChart({ frame }) {
             </div>
           )
         })}
-      </div>
-      <div className="desc-bar">
-        <span className="desc-text">{frame.desc}</span>
-        <span className="stats-text">
-          比较 {frame.stats.comparisons} · 交换 {frame.stats.swaps}
-        </span>
       </div>
     </div>
   )

@@ -1,14 +1,12 @@
-import { frame } from './frame'
+import { type Frame, frame } from './frame'
 
-/**
- * 冒泡排序 —— 边算边打帧
- */
-export function bubbleSort(input) {
+/** 冒泡排序 —— 边算边打帧 */
+export function bubbleSort(input: number[]): Frame[] {
   const arr = [...input]
   const n = arr.length
-  const steps = []
+  const steps: Frame[] = []
   const stats = { comparisons: 0, swaps: 0 }
-  const sorted = {}
+  const sorted: Record<number, string> = {}
 
   steps.push(frame(arr, {}, '开始冒泡排序：反复比较相邻元素，把较大值往后"冒泡"。', stats))
 

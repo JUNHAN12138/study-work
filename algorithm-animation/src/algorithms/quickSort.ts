@@ -1,17 +1,15 @@
-import { frame } from './frame'
+import { type Frame, frame } from './frame'
 
-/**
- * 快速排序 —— 边算边打帧
- */
-export function quickSort(input) {
+/** 快速排序 —— 边算边打帧 */
+export function quickSort(input: number[]): Frame[] {
   const arr = [...input]
-  const steps = []
+  const steps: Frame[] = []
   const stats = { comparisons: 0, swaps: 0 }
-  const sorted = {}
+  const sorted: Record<number, string> = {}
 
   steps.push(frame(arr, {}, '开始快速排序：选择基准元素，将小于基准的放左边，大于基准的放右边。', stats))
 
-  function partition(low, high) {
+  function partition(low: number, high: number): number {
     const pivot = arr[high]
     steps.push(frame(arr, { ...sorted, [high]: 'pivot' },
       `选取 a[${high}]=${pivot} 作为基准`, stats))
@@ -46,7 +44,7 @@ export function quickSort(input) {
     return i + 1
   }
 
-  function qsort(low, high) {
+  function qsort(low: number, high: number): void {
     if (low < high) {
       const pi = partition(low, high)
       qsort(low, pi - 1)

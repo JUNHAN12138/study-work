@@ -1,14 +1,12 @@
-import { frame } from './frame'
+import { type Frame, frame } from './frame'
 
-/**
- * 选择排序 —— 边算边打帧
- */
-export function selectionSort(input) {
+/** 选择排序 —— 边算边打帧 */
+export function selectionSort(input: number[]): Frame[] {
   const arr = [...input]
   const n = arr.length
-  const steps = []
+  const steps: Frame[] = []
   const stats = { comparisons: 0, swaps: 0 }
-  const sorted = {}
+  const sorted: Record<number, string> = {}
 
   steps.push(frame(arr, {}, '开始选择排序：每轮从未排序部分选出最小值，放到已排序末尾。', stats))
 
