@@ -87,7 +87,9 @@ export function bubbleSort(input) {
 
       if (arr[j] > arr[j + 1]) {
         stats.swaps++
-        ;[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+        const temp = arr[j]
+        arr[j] = arr[j + 1]
+        arr[j + 1] = temp
         // ② 交换帧：交换动作单独成帧，用 'swap' 语义
         steps.push(frame(arr, { ...sorted, [j]: 'swap', [j + 1]: 'swap' },
           `${arr[j + 1]} > ${arr[j]}，交换两者`, stats))
@@ -134,7 +136,8 @@ export function usePlayer(steps) {
 
   return {
     index, playing, speed, setSpeed,
-    play, pause,
+    play: () => setPlaying(true),
+    pause: () => setPlaying(false),
     next: () => setIndex(i => Math.min(i + 1, steps.length - 1)),  // 单步前进
     prev: () => setIndex(i => Math.max(i - 1, 0)),                 // 单步后退
     reset: () => setIndex(0),
