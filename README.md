@@ -87,12 +87,13 @@ export function bubbleSort(input) {
 
       if (arr[j] > arr[j + 1]) {
         stats.swaps++
-        const temp = arr[j]
-        arr[j] = arr[j + 1]
-        arr[j + 1] = temp
+        const left = arr[j]
+        const right = arr[j + 1]
+        arr[j] = right
+        arr[j + 1] = left
         // ② 交换帧：交换动作单独成帧，用 'swap' 语义
         steps.push(frame(arr, { ...sorted, [j]: 'swap', [j + 1]: 'swap' },
-          `${arr[j + 1]} > ${arr[j]}，交换两者`, stats))
+          `${left} > ${right}，交换两者`, stats))
       }
     }
     sorted[n - 1 - i] = 'sorted'   // ③ 本轮最大值归位
@@ -132,7 +133,8 @@ export function usePlayer(steps) {
   useEffect(() => {
     if (!playing) return
     if (index >= steps.length - 1) { setPlaying(false); return }
-    const delay = 600 / speed                     // 倍速 = 改间隔
+    const safeSpeed = Math.min(4, Math.max(0.25, speed))
+    const delay = 600 / safeSpeed                 // 倍速 = 改间隔（0.25x ~ 4x）
     timerRef.current = setTimeout(() => setIndex(i => i + 1), delay)
     return () => clearTimeout(timerRef.current)
   }, [playing, index, speed, steps.length])
@@ -216,8 +218,11 @@ const busy = useRef(false)   // 防止动画播放中重复触发
 const run = (fn) => (async () => {
   if (busy.current) return
   busy.current = true
-  await fn()
-  busy.current = false
+  try {
+    await fn()
+  } finally {
+    busy.current = false
+  }
 })()
 ```
 
@@ -382,7 +387,7 @@ function layoutTree(root) {
 
 - **森林（并查集）**：先按 `parent` 建 children 列表找出所有根，对每棵树跑“中序序号定 x / 深度定 y”，树与树之间留间隔。
 - **B 树（多路）**：叶子按顺序占位累加 x；内部结点 `x = (第一个孩子.x + 最后一个孩子.x) / 2`，居中于孩子跨度；结点是含多个关键字的方框，用竖线分隔。
-- **堆（数组↔完全二叉树）**：不用递归，直接由下标算坐标。结点 i（从 1 计）：`depth = ⌊log2(i)⌋`（JavaScript 可写作 `Math.floor(Math.log2(i))`），层内序号 `i - 2^depth`，`x = (序号 + 0.5) / 2^depth × 宽度`。同时并排画一行数组，下标与树结点一一对应联动高亮。
+- **堆（数组↔完全二叉树）**：不用递归，直接由下标算坐标。结点 i（从 1 计）：`depth = ⌊log2(i)⌋`（JavaScript 可写作 `Math.floor(Math.log2(i))`），层内序号 `i - 2 ** depth`，`x = (序号 + 0.5) / 2 ** depth × 宽度`。同时并排画一行数组，下标与树结点一一对应联动高亮。
 - **哈夫曼构造过程**：构造阶段把“森林”画成一排 chip（字符+权值），每步高亮被合并的两个最小权；构造完成后再切换成完整树（边标 0/1）+ 编码表 + WPL。
 - **线索/前驱后继箭头**：在树布局之上叠加带弧度的虚线（`Q` 二次贝塞尔），前驱/后继用不同颜色 + 箭头 marker，和实线树边区分开。
 
