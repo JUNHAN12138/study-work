@@ -124,7 +124,10 @@ export function usePlayer(steps) {
   const [speed, setSpeed] = useState(1)          // 0.25× ~ 4×
   const timerRef = useRef(null)
 
-  useEffect(() => { /* steps 变了就重置到第 0 帧 */ }, [steps])
+  useEffect(() => {
+    setIndex(0)
+    setPlaying(false)
+  }, [steps])
 
   useEffect(() => {
     if (!playing) return
@@ -349,9 +352,19 @@ function layoutTree(root) {
     nodes.push({ id: node.id, val: node.val, x, y })
     dfs(node.right, depth + 1)
   }
+  function collectEdges(node) {
+    if (!node) return
+    if (node.left) {
+      edges.push({ x1: node._pos.x, y1: node._pos.y, x2: node.left._pos.x, y2: node.left._pos.y })
+      collectEdges(node.left)
+    }
+    if (node.right) {
+      edges.push({ x1: node._pos.x, y1: node._pos.y, x2: node.right._pos.x, y2: node.right._pos.y })
+      collectEdges(node.right)
+    }
+  }
   dfs(root, 0)
-  // 二次遍历连边：父 → 左右孩子
-  // edges.push({ x1: parent.x, y1: parent.y, x2: child.x, y2: child.y })
+  collectEdges(root)
   return { nodes, edges, width, height }
 }
 ```
